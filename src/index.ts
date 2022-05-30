@@ -35,13 +35,13 @@ app.get('/lesson_01/api/videos/:videoId', (req: Request, res: Response) => {
         }
 })
 
-app.post('/videos', (req: Request, res: Response) => {
+app.post('/lesson_01/api/videos', (req: Request, res: Response) => {
     if (!!req.body.title && req.body.title.length < 40) {
         const newVideo = {
-            id: +(new Date()),
+            id: Math.floor(Math.random() * 10000),
             title: req.body.title,
-            //author: 'it-incubator.eu'
-            author: req.body.author
+            author: 'it-incubator.eu'
+            //author: req.body.author
         }
         videos.push(newVideo)
         res.status(201).send(newVideo)
