@@ -35,7 +35,7 @@ app.get('/lesson_01/api/videos/:videoId', (req: Request, res: Response) => {
         }
 })
 
-app.post('/lesson_01/api/videos', (req: Request, res: Response) => {
+app.post('/videos', (req: Request, res: Response) => {
     if (!!req.body.title && req.body.title.length < 40) {
         const newVideo = {
             id: +(new Date()),
