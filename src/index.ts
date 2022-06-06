@@ -16,7 +16,7 @@ let videos = [
 ]  
 
 app.get('/', (req: Request, res: Response ) => {
-    res.send('Hello: World')
+    res.send('Hello: World!')
 })
 
 app.get('/lesson_01/api/videos', (req: Request, res: Response ) => {
@@ -31,11 +31,11 @@ app.get('/lesson_01/api/videos/:videoId', (req: Request, res: Response) => {
            //res.send(video)
             res.status(200).send(video)
         } else {
-            res.send(404)
+            res.sendStatus(404)
         }
 })
 
-app.post('/lesson_01/api/videos', (req: Request, res: Response) => {
+app.post('/lesson_01/api/videos', (req: Request, res: Response) => {yar
     if (!!req.body.title && req.body.title.length < 40) {
         const newVideo = {
             id: Math.floor(Math.random() * 10000),
@@ -68,9 +68,9 @@ app.delete('/lesson_01/api/videos/:videoId',(req: Request, res: Response)=>{
     if (!!video) {
         //res.send(video)
         videos = videos.filter((y) => y.id !== +req.params.id)
-        res.send(204)
+        res.sendStatus(204)
     } else {
-        res.send(404)
+        res.sendStatus(404)
     }
 
    })
