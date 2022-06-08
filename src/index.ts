@@ -24,7 +24,7 @@ app.get('/videos', (req: Request, res: Response ) => {
     res.status(200).send(videos)
 })
 
-app.get('/:videoId', (req: Request, res: Response) => {
+app.get('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
        let video = videos.find(y => y.id === id)
         if (!!video) {
