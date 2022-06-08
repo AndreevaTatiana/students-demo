@@ -59,7 +59,7 @@ app.post('/videos', (req: Request, res: Response) => {
         res.status(201).send(newVideo)
 })
 
-app.delete('/lesson_01/api/videos/:videoId',(req: Request, res: Response)=>{
+app.delete('/videos/:videoId',(req: Request, res: Response)=>{
     //videos = videos.filter((y) => y.id !== +req.params.id)
     //res.send(204)
     const id = +req.params.videoId;
