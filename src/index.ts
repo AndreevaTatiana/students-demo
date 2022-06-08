@@ -16,15 +16,15 @@ let videos = [
 ]  
 
 app.get('/', (req: Request, res: Response ) => {
-    res.send('Hello: World!')
+    res.send('Hello: World!!!')
 })
 
-app.get('/lesson_01/api/videos', (req: Request, res: Response ) => {
+app.get('/videos', (req: Request, res: Response ) => {
     //res.send(videos)
     res.status(200).send(videos)
 })
 
-app.get('/lesson_01/api/videos/:videoId', (req: Request, res: Response) => {
+app.get('/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
        let video = videos.find(y => y.id === id)
         if (!!video) {
@@ -35,8 +35,20 @@ app.get('/lesson_01/api/videos/:videoId', (req: Request, res: Response) => {
         }
 })
 
-app.post('/lesson_01/api/videos', (req: Request, res: Response) => {
-    if (!!req.body.title && req.body.title.length < 40) {
+app.post('/videos', (req: Request, res: Response) => {
+    let title = req.body.title
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        res.status(400).send({
+                errorsMessages: [
+                    {
+                        'message': 'Incorrect title',
+                        'field': 'title'
+                    }
+                ],
+                "resultCode": 1
+            })
+        return
+    }
         const newVideo = {
             id: Math.floor(Math.random() * 10000),
             title: req.body.title,
@@ -45,19 +57,6 @@ app.post('/lesson_01/api/videos', (req: Request, res: Response) => {
         }
         videos.push(newVideo)
         res.status(201).send(newVideo)
-    } else {
-        let messageErr = {
-            "errorsMessages": [
-            {
-                "message": "string",
-                "field": "string"
-            }
-        ],
-            "resultCode": 404
-        }
-        res.status(404).send(messageErr)
-    }
-
 })
 
 app.delete('/lesson_01/api/videos/:videoId',(req: Request, res: Response)=>{
@@ -76,17 +75,26 @@ app.delete('/lesson_01/api/videos/:videoId',(req: Request, res: Response)=>{
    })
 
 app.put('/videos/:id',(req: Request, res: Response)=>{
+    let title = req.body.title
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    'message': 'Incorrect title',
+                    'field': 'title'
+                }
+            ],
+            "resultCode": 1
+        })
+        return
+    }
     const id = +req.params.id;
     let video = videos.find(y => y.id === id)
      if (!!video) {
         video.title = req.body.title
         res.send(video)
-     } else {
-         res.send(404)
      }
-
 })
-
 
 
 app.listen(port, () => {
