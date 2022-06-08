@@ -50,8 +50,8 @@ app.post('/videos', (req: Request, res: Response) => {
         return
     }
         const newVideo = {
-            //id: +(new Date()),
-            id: Math.floor(Math.random() * 10000),
+            id: +(new Date()),
+            //id: Math.floor(Math.random() * 10000),
             title: req.body.title,
             author: 'it-incubator.eu'
             //author: req.body.author
