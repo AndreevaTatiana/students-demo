@@ -64,15 +64,16 @@ app.delete('/videos/:videoId',(req: Request, res: Response)=>{
     //videos = videos.filter((y) => y.id !== +req.params.id)
     //res.send(204)
     const id = +req.params.videoId;
-    let video = videos.find(y => y.id === id)
-    if (!!video) {
-        //res.send(video)
-        videos = videos.filter((y) => y.id !== +req.params.id)
-        res.sendStatus(204)
-    } else {
+    if (!id) {
         res.sendStatus(404)
+    } else {
+        let video = videos.find(y => y.id === id)
+        if (!!video) {
+            //res.send(video)
+            videos = videos.filter((y) => y.id !== +req.params.id)
+            res.sendStatus(204)
+        }
     }
-
    })
 
 app.put('/videos/:id',(req: Request, res: Response)=>{
