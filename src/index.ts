@@ -26,7 +26,9 @@ app.get('/videos', (req: Request, res: Response ) => {
 
 app.get('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
-    if (id) {
+    if (!id) {
+        res.sendStatus(404)
+    } else {
         let video = videos.find(y => y.id === id)
         if (!!video) {
             //res.send(video)
@@ -34,8 +36,6 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
         } else {
             res.sendStatus(404)
         }
-    } else {
-        res.sendStatus(404)
     }
 })
 
