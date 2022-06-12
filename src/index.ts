@@ -74,9 +74,11 @@ app.delete('/videos/:videoId',(req: Request, res: Response)=>{
         let video = videos.find(y => y.id === id)
         if (!!video) {
             //res.send(video)
-            videos = videos.filter((y) => y.id !== +req.params.id)
+            videos = videos.filter((y) => y.id !== id)
             res.sendStatus(204)
-       }
+       } else {
+            res.sendStatus(404)
+        }
     }
    })
 
