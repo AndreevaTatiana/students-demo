@@ -71,12 +71,12 @@ app.delete('/videos/:videoId',(req: Request, res: Response)=>{
     if (!id) {
         res.sendStatus(404)
     } else {
-        //let video = videos.find(y => y.id === id)
-       // if (!!video) {
+        let video = videos.find(y => y.id === id)
+        if (!!video) {
             //res.send(video)
             videos = videos.filter((y) => y.id !== +req.params.id)
             res.sendStatus(204)
-      //  }
+       }
     }
    })
 
