@@ -26,7 +26,7 @@ app.get('/videos', (req: Request, res: Response ) => {
 
 app.get('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
-    if (!id || id == null) {
+    if (!id) {
         res.sendStatus(404)
     } else {
         let video = videos.find(y => y.id === id)
@@ -68,7 +68,7 @@ app.delete('/videos/:videoId',(req: Request, res: Response)=>{
     //videos = videos.filter((y) => y.id !== +req.params.id)
     //res.send(204)
     const id = +req.params.videoId;
-    if (!id || id == null) {
+    if (!id) {
         res.sendStatus(404)
     } else {
         let video = videos.find(y => y.id === id)
@@ -97,7 +97,7 @@ app.put('/videos/:id',(req: Request, res: Response)=>{
         return
     }
     const id = +req.params.id;
-    if (!id || id == null) {
+    if (!id) {
         res.sendStatus(404)
     } else {
         let video = videos.find(y => y.id === id)
