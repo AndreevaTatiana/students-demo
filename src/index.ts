@@ -26,13 +26,17 @@ app.get('/videos', (req: Request, res: Response ) => {
 
 app.get('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
-       let video = videos.find(y => y.id === id)
+    if (id) {
+        let video = videos.find(y => y.id === id)
         if (!!video) {
-           //res.send(video)
+            //res.send(video)
             res.status(200).send(video)
         } else {
             res.sendStatus(404)
         }
+    } else {
+        res.sendStatus(404)
+    }
 })
 
 app.post('/videos', (req: Request, res: Response) => {
@@ -44,8 +48,8 @@ app.post('/videos', (req: Request, res: Response) => {
                         'message': 'Incorrect title',
                         'field': 'title'
                     }
-                ],
-                "resultCode": 1
+                ]//,
+               // "resultCode": 1
             })
         return
     }
@@ -85,21 +89,24 @@ app.put('/videos/:id',(req: Request, res: Response)=>{
                     'message': 'Incorrect title',
                     'field': 'title'
                 }
-            ],
-            "resultCode": 1
+            ]//,
+           // "resultCode": 1
         })
         return
     }
     const id = +req.params.id;
-    let video = videos.find(y => y.id === id)
-     if (!!video) {
-        video.title = req.body.title
-        res.status(201)
-     } else {
-         res.status(404)
-     }
+    if (!id) {
+        res.sendStatus(404)
+    } else {
+        let video = videos.find(y => y.id === id)
+        if (!!video) {
+            video.title = req.body.title
+            res.status(201)
+        } else {
+            res.status(404)
+        }
+    }
 })
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
