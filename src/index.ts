@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express, {Request, Response} from 'express'
 import cors from 'cors'
 //import bodyParser from 'body-parser'
 
@@ -13,13 +13,13 @@ let videos = [
     {id: 3, title: 'About JS - 03', author: 'it-incubator.eu'},
     {id: 4, title: 'About JS - 04', author: 'it-incubator.eu'},
     {id: 5, title: 'About JS - 05', author: 'it-incubator.eu'},
-]  
+]
 
-app.get('/', (req: Request, res: Response ) => {
+app.get('/', (req: Request, res: Response) => {
     res.send('Hello: World!!!')
 })
 
-app.get('/videos', (req: Request, res: Response ) => {
+app.get('/videos', (req: Request, res: Response) => {
     //res.send(videos)
     res.status(200).send(videos)
 })
@@ -43,28 +43,28 @@ app.post('/videos', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         res.status(400).send({
-                errorsMessages: [
-                    {
-                        'message': 'Incorrect title',
-                        'field': 'title'
-                    }
-                ]//,
-               // "resultCode": 1
-            })
+            errorsMessages: [
+                {
+                    'message': 'Incorrect title',
+                    'field': 'title'
+                }
+            ]//,
+            // "resultCode": 1
+        })
         return
     }
-        const newVideo = {
-            id: +(new Date()),
-            //id: Math.floor(Math.random() * 10000),
-            title: req.body.title,
-            author: 'it-incubator.eu'
-            //author: req.body.author
-        }
-        videos.push(newVideo)
-        res.status(201).send(newVideo)
+    const newVideo = {
+        id: +(new Date()),
+        //id: Math.floor(Math.random() * 10000),
+        title: req.body.title,
+        author: 'it-incubator.eu'
+        //author: req.body.author
+    }
+    videos.push(newVideo)
+    res.status(201).send(newVideo)
 })
 
-app.delete('/videos/:videoId',(req: Request, res: Response)=>{
+app.delete('/videos/:videoId', (req: Request, res: Response) => {
     //videos = videos.filter((y) => y.id !== +req.params.id)
     //res.send(204)
     const id = +req.params.videoId;
@@ -76,13 +76,13 @@ app.delete('/videos/:videoId',(req: Request, res: Response)=>{
             //res.send(video)
             videos = videos.filter((y) => y.id !== id)
             res.sendStatus(204)
-       } else {
+        } else {
             res.sendStatus(404)
         }
     }
-   })
+})
 
-app.put('/videos/:id',(req: Request, res: Response)=>{
+app.put('/videos/:id', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         res.status(400).send({
@@ -92,22 +92,26 @@ app.put('/videos/:id',(req: Request, res: Response)=>{
                     'field': 'title'
                 }
             ]//,
-           // "resultCode": 1
+            // "resultCode": 1
         })
         return
     }
     const id = +req.params.id;
     if (!id) {
         res.sendStatus(404)
-    } else {
-        let video = videos.find(y => y.id === id)
-        if (!!video) {
-            video.title = req.body.title
-            res.status(201)
-        } else {
-            res.status(404)
-        }
+
+        return;
     }
+
+    let video = videos.find(v => v.id === id)
+    if (!!video) {
+        video.title = req.body.title
+        res.sendStatus(201)
+
+        return;
+    }
+
+    res.sendStatus(404)
 })
 
 app.listen(port, () => {
