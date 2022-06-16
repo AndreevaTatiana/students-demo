@@ -4,7 +4,7 @@ import {videosRepository} from "../repositories/videos-repository";
 
 export const videosRouter = Router({})
 
-videosRouter.get('/videos', (req: Request, res: Response) => {
+videosRouter.get('/', (req: Request, res: Response) => {
     //res.send(videos)
     const foundVideos = videosRepository.getVideos();
     res.status(200).send(foundVideos)
@@ -24,7 +24,7 @@ videosRouter.get('/:videoId', (req: Request, res: Response) => {
             res.sendStatus(404)
 })
 
-videosRouter.post('/videos', (req: Request, res: Response) => {
+videosRouter.post('/', (req: Request, res: Response) => {
     const title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         res.status(400).send({
